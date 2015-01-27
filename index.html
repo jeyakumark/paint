@@ -11,12 +11,12 @@
   </head>
 <body>
 <div id ="container"></div>
-   <div id="buttons">
+   
       <input type="button" id="loadImage" value="Load Image" width="100">
 	  <input type="button" id="cropImage" value="Crop">
 	  <input type="button" id="textImage" value="Text">
 	  <input type="button" id="saveImage" value="Save Image">
-    </div>
+    
   <script src="kinetic-v5.1.0.js"></script>
   <script>
     var stage = new Kinetic.Stage({
@@ -137,9 +137,9 @@ function initStage(images) {
     var text = new Kinetic.Text({
         x: 0,
         y: 0,
-        text: "Text",
+        text: "Euro group",
         fill: "#000",
-        fontSize: 24,
+        fontSize: 12,
         name: 'text'
     });
 
@@ -155,7 +155,7 @@ function initStage(images) {
          alert ("Crop image");
         });
 	 document.getElementById('textImage').addEventListener('click', function() {
-         alert ("Text image");
+         //alert ("Text image");
 		 initStage();
         });
 	 document.getElementById('saveImage').addEventListener('click', function() {
