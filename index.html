@@ -87,7 +87,10 @@
         
     function onPhotoDataSuccess(imageData) {
       alert ("ok");
-	  imageObj.src = imageURI;
+	  var returnedImg = new Image();
+      returnedImg.src = "data:image/jpeg;base64," + imageData;
+
+	  imageObj.image = returnedImg;
 	  layer.draw();
     }
     function onPhotoURISuccess(imageURI) {
