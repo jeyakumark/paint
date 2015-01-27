@@ -32,10 +32,11 @@
         width    : 1048,
         height   : 668,
 		draggable: true,
+		 offset: [524, 334]
     });
 
     var layer = new Kinetic.Layer();
-	stage.add(layer);
+	
 	
 	  var imageObj = new Image();
       imageObj.onload = function() {
@@ -54,6 +55,8 @@
 		
          imageObj.src = 'bg.png';
 		 
+		 var lastDist = 0;
+         var startScale = 1;
 		 stage.getContent().addEventListener('touchmove', function(evt) {
         var touch1 = evt.touches[0];
         var touch2 = evt.touches[1];
@@ -71,8 +74,12 @@
             lastDist = dist;
           }
 
-          var scale = stage.getScale().x * dist / lastDist;
+          //var scale = stage.getScale().x * dist / lastDist;
 
+		  var scale = {
+            x: stage.scale().x * dist / lastDist,
+            y: stage.scale().y * dist / lastDist
+        };
           stage.setScale(scale);
           stage.draw();
           lastDist = dist;
@@ -82,6 +89,8 @@
       stage.getContent().addEventListener('touchend', function() {
         lastDist = 0;
       }, false);
+	  
+	  stage.add(layer);
      /*
      var mY = 0;
 
@@ -227,6 +236,7 @@ function initStage(images) {
 	   function getDistance(p1, p2) {
         return Math.sqrt(Math.pow((p2.x - p1.x), 2) + Math.pow((p2.y - p1.y), 2));
       }
+	
 	 document.getElementById('cropImage').addEventListener('click', function() {
          alert ("Crop image");
         });
