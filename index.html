@@ -164,7 +164,7 @@ function initStage(images) {
     });
    
     layer.add(textGroup);
-    //stage.add(layer);
+    stage.add(layer);
 
       var messageText = new Kinetic.Text({
 			  x: .25*stage.getWidth(),
@@ -180,7 +180,9 @@ function initStage(images) {
         draggable: true,
 		  	fill: 'white',
 	    });
-		 textGroup.add(text);
+		 textGroup.add(messageText);
+		 
+		  stage.draw();
 		 }
 	 
 	 document.getElementById('cropImage').addEventListener('click', function() {
@@ -190,11 +192,11 @@ function initStage(images) {
          //alert ("Text image");
 		   initStage();
 		  //layer.add(messageText);
-		  layer.add(textGroup);
+		  //layer.add(textGroup);
 		 // messageText.setText('Euro Group');
           //messageText.setFontSize(messageText.getHeight()/2);
           //messageText.setPadding(messageText.getHeight()/5); //this was one possibility to do some alignment
-          stage.draw();
+         
         });
 	 document.getElementById('saveImage').addEventListener('click', function() {
          alert ("Save image");
