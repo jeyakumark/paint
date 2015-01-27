@@ -56,11 +56,7 @@
          imageObj.src = 'bg.png';
 		 
      
-     <!--
-      document.getElementById('loadImage').addEventListener('click', function() {
-         alert ("loding image");
-        });
-		-->
+    
 	 
 	 document.getElementById('cropImage').addEventListener('click', function() {
          alert ("Crop image");
@@ -90,15 +86,11 @@
         });
         
     function onPhotoDataSuccess(imageData) {
-      
+      alert ("ok");
     }
     function onPhotoURISuccess(imageURI) {
     
-      //var image = document.getElementById('image');
-      //var imgCnt = document.getElementById('image_container');
-      //imgCnt.style.display = 'block';
-	  //image.style.display = 'block';
-      //image.src = imageURI;
+      alert ("Captured success");
 	  imageObj.src = imageURI;
 	  layer.draw();
     }
