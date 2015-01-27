@@ -75,7 +75,8 @@
     
     
     function onDeviceReady() {
-	    //var capture_btn = $('#loadImage');
+	    /* var capture_btn = $('#loadImage');
+		*/
 	    var getImg_btn = $('#loadImage');
 	     
         pictureSource=navigator.camera.PictureSourceType;
@@ -84,6 +85,8 @@
         capture_btn.click(function(){
         	capturePhoto();
 			});
+			
+			
 		 getImg_btn.click(function(){
         	getImage(pictureSource.SAVEDPHOTOALBUM);
         });
@@ -112,7 +115,7 @@
       navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50 });
     }	
     function getImage(source) {
-      
+       alert ("get image from library");
         navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50, 
         destinationType: destinationType.FILE_URI,
         sourceType: source });
