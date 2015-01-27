@@ -22,7 +22,7 @@
 <body>
 <div id ="container"></div>
    <div id="buttons">
-      <input type="button" id="loadImage" value="Load Image">
+      <input type="button" id="loadImage" value="Load Image" width="100">
 	  <input type="button" id="cropImage" value="Crop">
 	  <input type="button" id="textImage" value="Text">
 	  <input type="button" id="saveImage" value="Save Image">
@@ -112,7 +112,7 @@
       navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50 });
     }	
     function getImage(source) {
-      // Retrieve image file location from specified source
+      
         navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50, 
         destinationType: destinationType.FILE_URI,
         sourceType: source });
