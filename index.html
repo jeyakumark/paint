@@ -75,15 +75,19 @@
     
     
     function onDeviceReady() {
-	    var capture_btn = $('#loadImage');
-	   
+	    //var capture_btn = $('#loadImage');
+	    var getImg_btn = $('#loadImage');
 	     
         pictureSource=navigator.camera.PictureSourceType;
         destinationType=navigator.camera.DestinationType;
             
         capture_btn.click(function(){
         	capturePhoto();
+			});
+		 getImg_btn.click(function(){
+        	getImage(pictureSource.SAVEDPHOTOALBUM);
         });
+        
         
     function onPhotoDataSuccess(imageData) {
       alert ("ok");
@@ -106,7 +110,13 @@
 	
     function capturePhoto() {
       navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50 });
-    }		
+    }	
+    function getImage(source) {
+      // Retrieve image file location from specified source
+        navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50, 
+        destinationType: destinationType.FILE_URI,
+        sourceType: source });
+    }	
    }
 
    </script>
