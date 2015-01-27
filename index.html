@@ -149,6 +149,23 @@ function initStage(images) {
     stage.draw();
 }
 */
+function initStage(images) {
+   
+    var textGroup = new Kinetic.Group({
+        x: 100,
+        y: 100,
+        draggable: true,
+        dragBoundFunc: function (pos) {
+            return {
+                x: this.getAbsolutePosition().x,
+                y: pos.y
+            };
+        }
+    });
+   
+    layer.add(textGroup);
+    //stage.add(layer);
+
       var messageText = new Kinetic.Text({
 			  x: .25*stage.getWidth(),
 			  y: .25*stage.getHeight(), 
@@ -156,13 +173,15 @@ function initStage(images) {
         height: .2*stage.getHeight(),
         fontSize: 48,
 		    fontFamily: 'Lucida Grande',
-		    text: 'Hello',
+		    text: 'Euro Group',
 		    align: 'center',
 		    textFill: '#006400',
       	stroke: 'gray',
         draggable: true,
 		  	fill: 'white',
 	    });
+		 textGroup.add(text);
+		 }
 	 
 	 document.getElementById('cropImage').addEventListener('click', function() {
          alert ("Crop image");
@@ -170,10 +189,11 @@ function initStage(images) {
 	 document.getElementById('textImage').addEventListener('click', function() {
          //alert ("Text image");
 		 //initStage();
-		  layer.add(messageText);
-		  messageText.setText('Euro Group');
-          messageText.setFontSize(messageText.getHeight()/2);
-          messageText.setPadding(messageText.getHeight()/5); //this was one possibility to do some alignment
+		  //layer.add(messageText);
+		  layer.add(textGroup);
+		 // messageText.setText('Euro Group');
+          //messageText.setFontSize(messageText.getHeight()/2);
+          //messageText.setPadding(messageText.getHeight()/5); //this was one possibility to do some alignment
           stage.draw();
         });
 	 document.getElementById('saveImage').addEventListener('click', function() {
