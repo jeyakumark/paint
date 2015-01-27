@@ -7,7 +7,17 @@
 	<script type="text/javascript" src="mylibs/jquery.mobile-1.0/jquery.mobile-1.0.min.js"></script>
 	<script type="text/javascript" src="mylibs/kinetic-v5.1.0.min.js"></script>
 	
- 
+ <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+     
+      button {
+        margin-top: 10px;
+        display: block;
+      }
+    </style>
   </head>
 <body>
 <div id ="container"></div>
@@ -116,9 +126,13 @@ function addAnchor(group, x, y, name) {
 
     group.add(anchor);
 }
-
+/*
 function initStage(images) {
-   
+    var stage = new Kinetic.Stage({
+        container: 'container',
+        width: 578,
+        height: 400
+    });
     var textGroup = new Kinetic.Group({
         x: 100,
         y: 100,
@@ -130,7 +144,8 @@ function initStage(images) {
             };
         }
     });
-   
+    var layer = new Kinetic.Layer();
+
     layer.add(textGroup);
     stage.add(layer);
 
@@ -148,15 +163,14 @@ function initStage(images) {
 
     stage.draw();
 }
-
-
+initStage();
+*/
 	 
 	 document.getElementById('cropImage').addEventListener('click', function() {
          alert ("Crop image");
         });
 	 document.getElementById('textImage').addEventListener('click', function() {
          alert ("Text image");
-		 initStage();
         });
 	 document.getElementById('saveImage').addEventListener('click', function() {
          alert ("Save image");
