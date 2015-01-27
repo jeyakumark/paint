@@ -11,12 +11,20 @@
   </head>
 <body>
 <div id ="container"></div>
-   
+
+   <fieldset class="ui-grid-a">
+	<div class="ui-block-c"><button id="loadImage" data-theme="a">Load Image</button></div>
+	<div class="ui-block-c"><button id="cropImage"data-theme="a">Crop</button></div>
+    <div class="ui-block-c"><button id="textImage" data-theme="a">Text</button></div>
+    <div class="ui-block-c"><button id="saveImage" data-theme="a">Save</button></div>	
+   </fieldset>
+     <!--
       <input type="button" id="loadImage" value="Load Image" width="100">
 	  <input type="button" id="cropImage" value="Crop">
 	  <input type="button" id="textImage" value="Text">
 	  <input type="button" id="saveImage" value="Save Image">
-    
+    -->
+	
   <script src="kinetic-v5.1.0.js"></script>
   <script>
     var stage = new Kinetic.Stage({
@@ -164,14 +172,14 @@ function initStage(images) {
     });
    
     layer.add(textGroup);
-    stage.add(layer);
+    //stage.add(layer);
 
       var messageText = new Kinetic.Text({
 			  x: .25*stage.getWidth(),
 			  y: .25*stage.getHeight(), 
         width: .2*stage.getWidth(),
         height: .2*stage.getHeight(),
-        fontSize: 48,
+        fontSize: 24,
 		    fontFamily: 'Lucida Grande',
 		    text: 'Euro Group',
 		    align: 'center',
@@ -185,6 +193,38 @@ function initStage(images) {
 		  stage.draw();
 		 }
 	 
+	    stage.getContent().addEventListener('touchmove', function(evt) {
+        var touch1 = evt.touches[0];
+        var touch2 = evt.touches[1];
+
+        if(touch1 && touch2) {
+          var dist = getDistance({
+            x: touch1.clientX,
+            y: touch1.clientY
+          }, {
+            x: touch2.clientX,
+            y: touch2.clientY
+          });
+
+          if(!lastDist) {
+            lastDist = dist;
+          }
+
+          var scale = stage.getScale().x * dist / lastDist;
+
+          stage.setScale(scale);
+          stage.draw();
+          lastDist = dist;
+        }
+      }, false);
+
+      stage.getContent().addEventListener('touchend', function() {
+        lastDist = 0;
+      }, false);
+
+	   function getDistance(p1, p2) {
+        return Math.sqrt(Math.pow((p2.x - p1.x), 2) + Math.pow((p2.y - p1.y), 2));
+      }
 	 document.getElementById('cropImage').addEventListener('click', function() {
          alert ("Crop image");
         });
