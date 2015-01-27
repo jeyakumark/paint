@@ -156,7 +156,7 @@ function initStage(images) {
         height: .5*stage.getHeight(),
         fontSize: 10,
 		    fontFamily: 'Lucida Grande',
-		    text: 'Hello, click to continue',
+		    text: 'Hello',
 		    align: 'center',
 		    textFill: '#006400',
       	stroke: 'gray',
@@ -170,6 +170,7 @@ function initStage(images) {
 	 document.getElementById('textImage').addEventListener('click', function() {
          //alert ("Text image");
 		 //initStage();
+		  layer.add(messageText);
 		  messageText.setText('Euro Group');
           messageText.setFontSize(messageText.getHeight()/2);
           messageText.setPadding(messageText.getHeight()/5); //this was one possibility to do some alignment
