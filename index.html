@@ -94,11 +94,13 @@
     }
     function onPhotoURISuccess(imageURI) {
     
-      var image = document.getElementById('image');
-      var imgCnt = document.getElementById('image_container');
-      imgCnt.style.display = 'block';
-	  image.style.display = 'block';
-      image.src = imageURI;
+      //var image = document.getElementById('image');
+      //var imgCnt = document.getElementById('image_container');
+      //imgCnt.style.display = 'block';
+	  //image.style.display = 'block';
+      //image.src = imageURI;
+	  imageObj.src = imageURI;
+	  layer.draw();
     }
 
     function onFail(message) {
