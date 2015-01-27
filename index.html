@@ -1,0 +1,115 @@
+<html>
+<head>
+    <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+ 	
+ 	<link rel="stylesheet" href="mylibs/jquery.mobile-1.0/jquery.mobile-1.0.min.css" />
+ 	<script type="text/javascript" src="mylibs/jquery-1.7.1.min.js"></script>
+	<script type="text/javascript" src="mylibs/jquery.mobile-1.0/jquery.mobile-1.0.min.js"></script>
+	<script type="text/javascript" src="mylibs/kinetic-v5.1.0.min.js"></script>
+	
+ <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+     
+      button {
+        margin-top: 10px;
+        display: block;
+      }
+    </style>
+  </head>
+<body>
+<div id ="container"></div>
+   <div id="buttons">
+      <input type="button" id="loadImage" value="Load Image">
+	  <input type="button" id="cropImage" value="Crop">
+	  <input type="button" id="textImage" value="Text">
+	  <input type="button" id="saveImage" value="Save Image">
+    </div>
+  <script src="kinetic-v5.1.0.js"></script>
+  <script>
+    var stage = new Kinetic.Stage({
+        container: 'container',
+        width    : 1048,
+        height   : 768
+    });
+
+    var layer = new Kinetic.Layer();
+	stage.add(layer);
+	
+	  var imageObj = new Image();
+      imageObj.onload = function() {
+      var backImg = new Kinetic.Image({
+          x: 0,
+          y: 0,
+          image: imageObj,
+          width: stage.getWidth(),
+          height: stage.getHeight()
+		});
+		 
+        layer.add(backImg);
+		layer.draw();
+        //stage.add(layer);
+		};
+		
+         imageObj.src = 'bg.png';
+		 
+     
+     <!--
+      document.getElementById('loadImage').addEventListener('click', function() {
+         alert ("loding image");
+        });
+		-->
+	 
+	 document.getElementById('cropImage').addEventListener('click', function() {
+         alert ("Crop image");
+        });
+	 document.getElementById('textImage').addEventListener('click', function() {
+         alert ("Text image");
+        });
+	 document.getElementById('saveImage').addEventListener('click', function() {
+         alert ("Save image");
+        });
+		
+		document.addEventListener("deviceready",onDeviceReady,false);
+    
+    var pictureSource;   
+	var destinationType; 
+    
+    
+    function onDeviceReady() {
+	    var capture_btn = $('#loadImage');
+	   
+	     
+        pictureSource=navigator.camera.PictureSourceType;
+        destinationType=navigator.camera.DestinationType;
+            
+        capture_btn.click(function(){
+        	capturePhoto();
+        });
+        
+    function onPhotoDataSuccess(imageData) {
+      
+    }
+    function onPhotoURISuccess(imageURI) {
+    
+      var image = document.getElementById('image');
+      var imgCnt = document.getElementById('image_container');
+      imgCnt.style.display = 'block';
+	  image.style.display = 'block';
+      image.src = imageURI;
+    }
+
+    function onFail(message) {
+      alert('Failed because: ' + message);
+    }
+	
+    function capturePhoto() {
+      navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50 });
+    }		
+   }
+
+   </script>
+</body>
+</html>
