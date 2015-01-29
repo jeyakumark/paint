@@ -532,11 +532,13 @@ function onMousemove(event) {
     function onPhotoDataSuccess(imageData) {
       alert ("ok");
 	  var returnedImg = new Image();
-      returnedImg.src = "data:image/jpeg;base64," + imageData;
+	  returnedImg.onload = function() {
+           returnedImg.src = "data:image/jpeg;base64," + imageData;
       //image.src = "data:image/jpeg;base64," + imageData;
 
-	  imageObj.image = returnedImg;
+	  imageObj.image= returnedImg;
 	  layer.draw();
+	  };
     }
     function onPhotoURISuccess(imageURI) {
     
