@@ -525,9 +525,9 @@ function View() {
     }
 
     function zoom(newscale, center) { // zoom around center
-        var mx = center.x - kineticLayer.getX(),
-            my = center.y - kineticLayer.getY(),
-            oldscale = kineticLayer.getScaleX();
+        var mx = center.x - layer.getX(),
+            my = center.y - layer.getY(),
+            oldscale = layer.getScaleX();
         editTextLayer('zoom ' + newscale.toFixed(2) + ' around ' + mx.toFixed(2) + ',' + my.toFixed(2));
 
         zoomOrigin = makePos(mx / oldscale + zoomOrigin.x - mx / newscale, my / oldscale + zoomOrigin.y - my / newscale);
