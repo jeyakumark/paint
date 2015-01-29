@@ -534,15 +534,16 @@ function onMousemove(event) {
 	  var returnedImg = new Image();
 	  
 	  returnedImg.onload = function() {
-      returnedImg.src = "data:image/jpeg;base64," + imageData;
+     
       var camImg = new Kinetic.Image({
           x: 0,
           y: 0,
          image: returnedImg
          
 		});
-	  
-	   alert ("ok");
+		}
+	    returnedImg.src = "data:image/jpeg;base64," + imageData;
+	    alert ("ok");
 	   //imageObj.image = camImg;
 	   layer.add(camImg);
 	   layer.draw();
