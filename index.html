@@ -519,7 +519,7 @@ function onMousemove(event) {
             
 		
         capture_btn.click(function(){
-		    alert ("camera start");
+		    //alert ("camera start");
         	capturePhoto();
 			});
 			
@@ -533,8 +533,9 @@ function onMousemove(event) {
       alert ("ok");
 	  //var returnedImg = new Image();
       //returnedImg.src = "data:image/jpeg;base64," + imageData;
+      //image.src = "data:image/jpeg;base64," + imageData;
 
-	  imageObj.image = "data:image/jpeg;base64," + imageData; ;
+	  imageObj.src = "data:image/jpeg;base64," + imageData; ;
 	  layer.draw();
     }
     function onPhotoURISuccess(imageURI) {
@@ -549,8 +550,8 @@ function onMousemove(event) {
     }
 	
     function capturePhoto() {
-	  alert ("ready 1 2 3");
-      navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50 });
+	  //alert ("ready 1 2 3");
+      navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50 ,destinationType: destinationType.DATA_URL });
     }	
 	
     function getImage(source) {
