@@ -530,16 +530,20 @@ function onMousemove(event) {
         
         
     function onPhotoDataSuccess(imageData) {
-      //alert ("ok");
+      alert ("ok");
 	  var returnedImg = new Image();
 	  returnedImg.onload = function() {
-           returnedImg.src = "data:image/jpeg;base64," + imageData;
-      //image.src = "data:image/jpeg;base64," + imageData;
-     
-	  //imageObj.image= returnedImg;
+      returnedImg.src = "data:image/jpeg;base64," + imageData;
+      var camImg = new Kinetic.Image({
+          x: 0,
+          y: 0,
+          image: returnedImg
+         
+		});
+	  
 	   alert ("ok");
-	   imageObj.src = "data:image/jpeg;base64," + imageData;
-	  layer.draw();
+	   imageObj.image = camImg;
+	   layer.draw();
 	  };
     }
     function onPhotoURISuccess(imageURI) {
