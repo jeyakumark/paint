@@ -23,6 +23,7 @@
     <div class="ui-block-c"><button id="saveImage" data-theme="a">Save</button></div>	
 	<div class="ui-block-c"><button id="rotateImage" data-theme="a">rotate</button></div>	
 	<div class="ui-block-c"><button id="scrollImage" data-theme="a">scroll</button></div>	
+	<div class="ui-block-c"><button id="zoomImage" data-theme="a">zoom</button></div>	
    </fieldset>
      <!--
       <input type="button" id="loadImage" value="Load Image" width="100">
@@ -439,7 +440,147 @@ function onMousemove(event) {
 }
 		
 		
-		
+		function makePos(x, y) {
+    return {
+        'x': x,
+        'y': y
+    };
+}
+
+
+function View() {
+    this.init = init;
+
+    var self = this;
+
+    var kineticStage,
+        kineticLayer,
+        kineticTextLayer,
+
+        zoomOrigin = makePos(0, 0),
+        zoomFactor = 1.1,
+        pinchLastDist, pinchStartCenter;
+
+    init();
+
+    function init() {
+
+        // disable ipad zoom to prevent safari from zooming on orientation change
+        $('head meta[name=viewport]').remove();
+        $('head').prepend('<meta name="viewport" content="user-scalable=no, width=device-width, minimum-scale=1.0 , initial-scale=1.0, maximum-scale=1.0" />');
+
+        /*create stage layer and circle
+        kineticStage = new Kinetic.Stage({
+            container: 'container',
+            width: $(document).width() - 10,
+            height: $(document).height() - 10,
+        });
+
+        kineticLayer = new Kinetic.Layer({
+            draggable: true
+        });*/
+        var circle = new Kinetic.Circle({
+            x: 200,
+            y: 200,
+            radius: 50,
+            fill: '#00D200',
+            stroke: 'black',
+            strokeWidth: 2,
+        });
+        kineticLayer.add(circle);
+        stage.add(kineticLayer);
+
+        kineticTextLayer = new Kinetic.Layer({});
+        stage.add(kineticTextLayer);
+
+        /* register events and proxy to methods
+        $(kineticStage.content).on('mousewheel', function(e) {
+            e.preventDefault();
+            var evt = e.originalEvent;
+            stageMouseWheel.call(self, evt.deltaY, makePos(evt.clientX, evt.clientY));
+        });
+		*/
+        stage.getContent().addEventListener('touchmove', function(e) {
+            e.preventDefault(); // prevent iPAD panning
+            var touch1 = e.touches[0];
+            var touch2 = e.touches[1];
+            if (touch1 && touch2) {
+                touch1.offsetX = touch1.pageX - $(touch1.target).offset().left;
+                touch1.offsetY = touch1.pageY - $(touch1.target).offset().top;
+                touch2.offsetX = touch2.pageX - $(touch2.target).offset().left;
+                touch2.offsetY = touch2.pageY - $(touch2.target).offset().top;
+                stagePinch.call(self, makePos(touch1.offsetX, touch1.offsetY), makePos(touch2.offsetX, touch2.offsetY));
+            }
+        }, false);
+        stage.getContent().addEventListener('touchend', function(e) {
+            stageTouchEnd.call(self);
+        }, false);
+
+        $(window).on("orientationchange", function(event) {
+            window.scrollTo(0, 0); // scroll to top left on orientation change
+        });
+
+        editTextLayer('scrollwheel/pinch to zoom');
+        window.scrollTo(0, 0);
+    }
+
+    function zoom(newscale, center) { // zoom around center
+        var mx = center.x - kineticLayer.getX(),
+            my = center.y - kineticLayer.getY(),
+            oldscale = kineticLayer.getScaleX();
+        editTextLayer('zoom ' + newscale.toFixed(2) + ' around ' + mx.toFixed(2) + ',' + my.toFixed(2));
+
+        zoomOrigin = makePos(mx / oldscale + zoomOrigin.x - mx / newscale, my / oldscale + zoomOrigin.y - my / newscale);
+console.log(zoomOrigin.x + ' ' + zoomOrigin.y);
+        kineticLayer.offset(makePos(zoomOrigin.x, zoomOrigin.y));
+        kineticLayer.scale({
+            x: newscale,
+            y: newscale
+        });
+        kineticLayer.draw();
+    }
+
+    function stageMouseWheel(factor, p) {
+        var oldscale = kineticLayer.getScaleX(),
+            newscale = oldscale * (zoomFactor - (factor < 0 ? 0.2 : 0));
+        zoom(newscale, p);
+    }
+
+    function stagePinch(p1, p2) {
+        var dist = Math.sqrt(Math.pow((p2.x - p1.x), 2) + Math.pow((p2.y - p1.y), 2));
+        if (!pinchLastDist) pinchLastDist = dist;
+        var newscale = kineticLayer.getScale().x * dist / pinchLastDist;
+
+        var center = makePos(Math.abs((p1.x + p2.x) / 2), Math.abs((p1.y + p2.y) / 2));
+        if (!pinchStartCenter) pinchStartCenter = center;
+
+        zoom(newscale, pinchStartCenter);
+        pinchLastDist = dist;
+    }
+
+    function stageTouchEnd() {
+        pinchLastDist = pinchStartCenter = 0;
+    }
+
+    function editTextLayer(text) {
+        var label = new Kinetic.Text({
+            x: 0,
+            y: 0,
+            text: text,
+            fontSize: 12,
+            fontFamily: 'Calibri',
+            fill: 'black'
+        });
+
+        kineticTextLayer.destroyChildren();
+        kineticTextLayer.add(label);
+        kineticTextLayer.drawScene();
+    }
+}
+
+
+
+
 		
 
 	   function getDistance(p1, p2) {
@@ -500,6 +641,12 @@ function onMousemove(event) {
          alert ("scroll");
 		 stage.setDraggable(false);
 		 stage.draw();
+        });
+		
+		 document.getElementById('zoomImage').addEventListener('click', function() {
+         alert ("Zoom image");
+		 var view = new View();
+		 
         });
 		
 		document.addEventListener("deviceready",onDeviceReady,false);
