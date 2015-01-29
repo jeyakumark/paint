@@ -534,7 +534,7 @@ function onMousemove(event) {
 	  var returnedImg = new Image();
 	  
 	  returnedImg.onload = function() {
-     
+      layer.clear();
       var camImg = new Kinetic.Image({
           x: 0,
           y: 0,
@@ -547,7 +547,8 @@ function onMousemove(event) {
 	    alert ("ok");
 	 
 	   layer.add(camImg);
-	   layer.draw();
+	   stage.add(layer);
+	   //layer.draw();
 	  
     }
 	
