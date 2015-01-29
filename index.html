@@ -543,12 +543,13 @@ function onMousemove(event) {
 		});
 		};
 		
-	    returnedImg.src = "data:image/jpeg;base64," + imageData;
+	    //returnedImg.src = "data:image/jpeg;base64," + imageData;
+		  returnedImg.src = imageData;
 	    alert ("ok");
 	 
 	   layer.add(camImg);
 	   stage.add(layer);
-	   //layer.draw();
+	   layer.draw();
 	  
     }
 	
@@ -566,7 +567,7 @@ function onMousemove(event) {
 	
     function capturePhoto() {
 	  //alert ("ready 1 2 3");
-      navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50 ,destinationType: destinationType.DATA_URL });
+      navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50 ,destinationType: destinationType.FILE_URI });
     }	
 	
     function getImage(source) {
