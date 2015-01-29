@@ -529,11 +529,11 @@ function onMousemove(event) {
         
         
     function onPhotoDataSuccess(imageData) {
-      //alert ("ok");
-	  var returnedImg = new Image();
-      returnedImg.src = "data:image/jpeg;base64," + imageData;
+      alert ("ok");
+	  //var returnedImg = new Image();
+      //returnedImg.src = "data:image/jpeg;base64," + imageData;
 
-	  imageObj.image = returnedImg;
+	  imageObj.image = "data:image/jpeg;base64," + imageData; ;
 	  layer.draw();
     }
     function onPhotoURISuccess(imageURI) {
@@ -548,6 +548,7 @@ function onMousemove(event) {
     }
 	
     function capturePhoto() {
+	  alert ("ready 1 2 3");
       navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50 });
     }	
 	
