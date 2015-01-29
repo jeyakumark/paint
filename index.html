@@ -530,7 +530,7 @@ function onMousemove(event) {
         
         
     function onPhotoDataSuccess(imageData) {
-      alert ("ok");
+      alert (imageData);
 	  var returnedImg = new Image();
 	  
 	  returnedImg.onload = function() {
@@ -542,9 +542,10 @@ function onMousemove(event) {
          
 		});
 		};
+		
 	    returnedImg.src = "data:image/jpeg;base64," + imageData;
 	    alert ("ok");
-	   //imageObj.image = camImg;
+	 
 	   layer.add(camImg);
 	   layer.draw();
 	  
