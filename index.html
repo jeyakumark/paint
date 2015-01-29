@@ -532,20 +532,24 @@ function onMousemove(event) {
     function onPhotoDataSuccess(imageData) {
       alert ("ok");
 	  var returnedImg = new Image();
+	  
 	  returnedImg.onload = function() {
       returnedImg.src = "data:image/jpeg;base64," + imageData;
       var camImg = new Kinetic.Image({
           x: 0,
           y: 0,
-          image: returnedImg
+         image: returnedImg
          
 		});
 	  
 	   alert ("ok");
-	   imageObj.image = camImg;
+	   //imageObj.image = camImg;
+	   layer.add(camImg);
 	   layer.draw();
 	  };
     }
+	
+	
     function onPhotoURISuccess(imageURI) {
     
       alert ("Captured success");
