@@ -487,19 +487,19 @@ function View() {
             stroke: 'black',
             strokeWidth: 2,
         });
-        kineticLayer.add(circle);
-        stage.add(kineticLayer);
+        layer.add(circle);
+        stage.add(layer);
 
         kineticTextLayer = new Kinetic.Layer({});
         stage.add(kineticTextLayer);
 
-        /* register events and proxy to methods
-        $(kineticStage.content).on('mousewheel', function(e) {
+        // register events and proxy to methods
+        $(stage.content).on('mousewheel', function(e) {
             e.preventDefault();
             var evt = e.originalEvent;
             stageMouseWheel.call(self, evt.deltaY, makePos(evt.clientX, evt.clientY));
         });
-		*/
+		
         stage.getContent().addEventListener('touchmove', function(e) {
             e.preventDefault(); // prevent iPAD panning
             var touch1 = e.touches[0];
@@ -532,16 +532,16 @@ function View() {
 
         zoomOrigin = makePos(mx / oldscale + zoomOrigin.x - mx / newscale, my / oldscale + zoomOrigin.y - my / newscale);
 console.log(zoomOrigin.x + ' ' + zoomOrigin.y);
-        kineticLayer.offset(makePos(zoomOrigin.x, zoomOrigin.y));
-        kineticLayer.scale({
+        layer.offset(makePos(zoomOrigin.x, zoomOrigin.y));
+        layer.scale({
             x: newscale,
             y: newscale
         });
-        kineticLayer.draw();
+        layer.draw();
     }
 
     function stageMouseWheel(factor, p) {
-        var oldscale = kineticLayer.getScaleX(),
+        var oldscale = layer.getScaleX(),
             newscale = oldscale * (zoomFactor - (factor < 0 ? 0.2 : 0));
         zoom(newscale, p);
     }
@@ -549,7 +549,7 @@ console.log(zoomOrigin.x + ' ' + zoomOrigin.y);
     function stagePinch(p1, p2) {
         var dist = Math.sqrt(Math.pow((p2.x - p1.x), 2) + Math.pow((p2.y - p1.y), 2));
         if (!pinchLastDist) pinchLastDist = dist;
-        var newscale = kineticLayer.getScale().x * dist / pinchLastDist;
+        var newscale = layer.getScale().x * dist / pinchLastDist;
 
         var center = makePos(Math.abs((p1.x + p2.x) / 2), Math.abs((p1.y + p2.y) / 2));
         if (!pinchStartCenter) pinchStartCenter = center;
