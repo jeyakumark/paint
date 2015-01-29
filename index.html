@@ -13,10 +13,16 @@
 <div id ="container"></div>
 
    <fieldset class="ui-grid-a">
-	<div class="ui-block-c"><button id="loadImage" data-theme="a">Load Image</button></div>
+   <div class="ui-block-c"><button id="cameraImage" data-theme="a">Camera</button></div>
+	<div class="ui-block-c"><button id="loadImage" data-theme="a">Load</button></div>
 	<div class="ui-block-c"><button id="cropImage"data-theme="a">Crop</button></div>
     <div class="ui-block-c"><button id="textImage" data-theme="a">Text</button></div>
+	<div class="ui-block-c"><button id="shapeImage" data-theme="a">Shape</button></div>
+	 <div class="ui-block-c"><button id="imgImage" data-theme="a">Image</button></div>
+	 <div class="ui-block-c"><button id="brushImage" data-theme="a">Brush</button></div>
     <div class="ui-block-c"><button id="saveImage" data-theme="a">Save</button></div>	
+	<div class="ui-block-c"><button id="rotateImage" data-theme="a">rotate</button></div>	
+	<div class="ui-block-c"><button id="scrollImage" data-theme="a">scroll</button></div>	
    </fieldset>
      <!--
       <input type="button" id="loadImage" value="Load Image" width="100">
@@ -54,7 +60,7 @@
 		};
 		
          imageObj.src = 'bg.png';
-		 
+		 /*
 		 var lastDist = 0;
          var startScale = 1;
 		 stage.getContent().addEventListener('touchmove', function(evt) {
@@ -89,8 +95,17 @@
       stage.getContent().addEventListener('touchend', function() {
         lastDist = 0;
       }, false);
+	  */
 	  
+	 
 	  stage.add(layer);
+	  
+	  
+	  
+	  stage.draw();
+	  
+	  
+	  
      /*
      var mY = 0;
 
@@ -195,8 +210,128 @@ function initStage(images) {
     stage.draw();
 }
 */
-function initStage(images) {
-   
+
+	
+	
+function drawImage()
+{
+ var myimage = new Image();
+ myimage.src = "bird.png";
+ 
+ 
+ var imageGroup = new Kinetic.Group({
+        x: 100,
+        y: 100,
+        draggable: true,
+        dragBoundFunc: function (pos) {
+            return {
+                x: this.getAbsolutePosition().x,
+                y: pos.y
+            };
+        }
+    });
+ var image = new Kinetic.Image({
+        x: 100,
+        y: 100,
+        image : myimage,
+        draggable: true
+       
+        
+    });
+	
+
+	imageGroup.add(image);
+	layer.add(imageGroup);
+}
+function drawImageRotate()
+{
+ var myimage = new Image();
+ myimage.src = "bird.png";
+ 
+ 
+ var imageGroup = new Kinetic.Group({
+        x: 100,
+        y: 100,
+        draggable: true,
+        dragBoundFunc: function (pos) {
+            return {
+                x: this.getAbsolutePosition().x,
+                y: pos.y
+            };
+        }
+    });
+ var image = new Kinetic.Image({
+        x: 100,
+        y: 100,
+        image : myimage,
+        draggable: true
+       
+        
+    });
+	
+    image.rotateDeg(90);
+
+	imageGroup.add(image);
+	layer.add(imageGroup);
+}
+
+function drawCrop()
+{
+ var cropGroup = new Kinetic.Group({
+        x: 100,
+        y: 100,
+        draggable: true,
+        dragBoundFunc: function (pos) {
+            return {
+                x: this.getAbsolutePosition().x,
+                y: pos.y
+            };
+        }
+    });
+var rect = new Kinetic.Rect({
+    width: stage.getWidth()/2,
+    height: stage.getHeight()/2,
+    x: 200,
+    y: 200,
+    stroke: 'blue',
+    strokeWidth: 2,
+	 draggable: true
+});
+	 cropGroup.add(rect);
+	layer.add(cropGroup);
+}
+
+
+function drawShape()
+{
+ var shapeGroup = new Kinetic.Group({
+        x: 100,
+        y: 100,
+        draggable: true,
+        dragBoundFunc: function (pos) {
+            return {
+                x: this.getAbsolutePosition().x,
+                y: pos.y
+            };
+        }
+    });
+ var circle = new Kinetic.Circle({
+        x: 100,
+        y: 100,
+        stroke: '#666',
+        fill: '#ddd',
+        strokeWidth: 2,
+        radius: 25,
+      
+        draggable: true
+       
+        
+    });
+	 shapeGroup.add(circle);
+	layer.add(shapeGroup);
+}
+function initStage(message) {
+   /*
     var textGroup = new Kinetic.Group({
         x: 100,
         y: 100,
@@ -209,8 +344,7 @@ function initStage(images) {
         }
     });
    
-    layer.add(textGroup);
-    //stage.add(layer);
+    */
 
       var messageText = new Kinetic.Text({
 			  x: .25*stage.getWidth(),
@@ -219,19 +353,94 @@ function initStage(images) {
         height: .2*stage.getHeight(),
         fontSize: 24,
 		    fontFamily: 'Lucida Grande',
-		    text: 'Euro Group',
+		    text: message,
 		    align: 'center',
-		    textFill: '#006400',
-      	stroke: 'gray',
+		    textFill: 'green',
+      	stroke: 'green',
         draggable: true,
-		  	fill: 'white',
+		  	fill: 'green',
 	    });
-		 textGroup.add(messageText);
-		 
-		  stage.draw();
+		 //textGroup.add(messageText);
+		// layer.add(textGroup);
+		layer.add(messageText);
+		 // stage.draw();
 		 }
 	 
 	    
+    var background = new Kinetic.Rect({
+    x: 0,
+    y: 0,
+    width: stage.getWidth(),
+    height: stage.getHeight(),
+    fill: 'white',
+    stroke: 'black',
+    strokeWidth: 1,
+})
+//layer.add(background);
+//layer.draw();
+
+// a flag we use to see if we're dragging the mouse
+var isMouseDown = false;
+// a reference to the line we are currently drawing
+var newline;
+// a reference to the array of points making newline
+var points = [];
+
+// on the background
+// listen for mousedown, mouseup and mousemove events
+
+
+// On mousedown
+// Set the isMouseDown flag to true
+// Create a new line,
+// Clear the points array for new points
+// set newline reference to the newly created line
+function onMousedown(event) {
+   
+    isMouseDown = true;
+    points = [];
+	//alert (stage.getPointerPosition());
+    points.push(stage.getPointerPosition());
+	//alert("OK");
+    var line = new Kinetic.Line({
+        points: points,
+        stroke: "green",
+        strokeWidth: 5,
+        lineCap: 'round',
+        lineJoin: 'round'
+    });
+	
+    layer.add(line);
+    newline = line;
+	//alert (newline);
+	 
+}
+
+// on mouseup end the line by clearing the isMouseDown flag
+function onMouseup(event) {
+    isMouseDown = false;
+	//alert ("OK");
+}
+
+// on mousemove
+// Add the current mouse position to the points[] array
+// Update newline to include all points in points[]
+// and redraw the layer
+function onMousemove(event) {
+    if (!isMouseDown) {
+        return;
+    };
+    points.push(stage.getPointerPosition());
+    newline.setPoints(points);
+    layer.drawScene();
+    // this is faster since the "hit" canvas is not refreshed
+	//alert ("draw");
+    //layer.draw();
+}
+		
+		
+		
+		
 
 	   function getDistance(p1, p2) {
         return Math.sqrt(Math.pow((p2.x - p1.x), 2) + Math.pow((p2.y - p1.y), 2));
@@ -239,10 +448,13 @@ function initStage(images) {
 	
 	 document.getElementById('cropImage').addEventListener('click', function() {
          alert ("Crop image");
+		 drawCrop();
+		 layer.draw();
         });
 	 document.getElementById('textImage').addEventListener('click', function() {
          //alert ("Text image");
-		   initStage();
+		   initStage("Euro Group");
+		   layer.draw();
 		  //layer.add(messageText);
 		  //layer.add(textGroup);
 		 // messageText.setText('Euro Group');
@@ -251,7 +463,43 @@ function initStage(images) {
          
         });
 	 document.getElementById('saveImage').addEventListener('click', function() {
-         alert ("Save image");
+	 //alert ("save");
+	 //var layer = new Kinetic.Layer();
+	 layer.add(background);
+     layer.draw();
+        background.on('mousedown', function () {
+                onMousedown();
+              });
+           background.on('mouseup', function () {
+                onMouseup();
+            });
+             background.on('mousemove', function () {
+                onMousemove();
+                });
+        });
+		
+		document.getElementById('shapeImage').addEventListener('click', function() {
+         alert ("Shape");
+		 drawShape();
+		 stage.draw();
+        });
+		
+		document.getElementById('imgImage').addEventListener('click', function() {
+         alert ("Image");
+		 drawImage();
+		 stage.draw();
+        });
+		
+		document.getElementById('rotateImage').addEventListener('click', function() {
+         alert ("Image");
+		 drawImageRotate();
+		 stage.draw();
+        });
+		
+		document.getElementById('scrollImage').addEventListener('click', function() {
+         alert ("scroll");
+		 stage.setDraggable(false);
+		 stage.draw();
         });
 		
 		document.addEventListener("deviceready",onDeviceReady,false);
@@ -264,6 +512,7 @@ function initStage(images) {
 	    /* var capture_btn = $('#loadImage');
 		*/
 	    var getImg_btn = $('#loadImage');
+		
 	     
         pictureSource=navigator.camera.PictureSourceType;
         destinationType=navigator.camera.DestinationType;
